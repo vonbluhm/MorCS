@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bx2hbmci8fhyd"]
+
+[ext_resource type="Script" path="res://scripts/stage.gd" id="1_pc3sb"]
+[ext_resource type="PackedScene" uid="uid://be0iv16y63jix" path="res://scenes/input_handler.tscn" id="1_yrtvv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nrpx"]
+size = Vector2(1149.5, 20)
+
+[sub_resource type="Curve2D" id="Curve2D_4t2k4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1118, 0, 0, 0, 0, 0, 72, 0, 0, 0, 0, 0, 1118, 0)
+}
+point_count = 3
+
+[node name="Stage" type="Node2D"]
+script = ExtResource("1_pc3sb")
+
+[node name="InputHandler" parent="." instance=ExtResource("1_yrtvv")]
+position = Vector2(580, 608)
+
+[node name="LifeLossZone" type="Area2D" parent="."]
+position = Vector2(576, 656)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LifeLossZone"]
+shape = SubResource("RectangleShape2D_8nrpx")
+
+[node name="GenerationTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_4t2k4")
+
+[node name="SpawnPoint" type="PathFollow2D" parent="Path2D"]
+position = Vector2(1118, 0)
+rotation = 3.14159
+
+[connection signal="area_entered" from="LifeLossZone" to="." method="_on_life_loss_zone_area_entered"]
+[connection signal="timeout" from="GenerationTimer" to="." method="_on_generation_timer_timeout"]

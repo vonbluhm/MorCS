@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://cgiiboq3koae5"]
+
+[ext_resource type="Script" path="res://scripts/symbol.gd" id="1_b3d3h"]
+[ext_resource type="Texture2D" uid="uid://dd23kl1a45hps" path="res://symbol.svg" id="2_72f6n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pyjyf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_72f6n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ube77"]
+size = Vector2(113, 113)
+
+[sub_resource type="LabelSettings" id="LabelSettings_iw7of"]
+font_size = 32
+
+[node name="Symbol" type="Area2D"]
+script = ExtResource("1_b3d3h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pyjyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ube77")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -56.5
+offset_right = 56.5
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_iw7of")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 16.0
+offset_right = 57.0
+offset_bottom = 57.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_iw7of")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
