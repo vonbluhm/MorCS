@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cqm3x5u6jmst6"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_g3nje"]
+
+[resource]
+script = ExtResource("1_g3nje")
+hide_codes = false
