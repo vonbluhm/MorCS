@@ -3,6 +3,7 @@ extends Control
 
 
 func _ready():
+	$VBoxContainer/HBoxContainer/ItemList.grab_focus()
 	$VBoxContainer/HBoxContainer2/Button.set_pressed_no_signal(settings.hide_codes)
 	
 

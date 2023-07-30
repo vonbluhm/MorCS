@@ -15,6 +15,21 @@ point_count = 3
 process_mode = 1
 script = ExtResource("1_pc3sb")
 
+[node name="Counter" type="Label" parent="."]
+top_level = true
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ScoreBoard" type="Label" parent="."]
+top_level = true
+offset_left = 1108.0
+offset_right = 1152.0
+offset_bottom = 23.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
 [node name="InputHandler" parent="." instance=ExtResource("1_yrtvv")]
 position = Vector2(580, 608)
 
@@ -35,21 +50,6 @@ curve = SubResource("Curve2D_4t2k4")
 [node name="SpawnPoint" type="PathFollow2D" parent="Path2D"]
 position = Vector2(1118, 0)
 rotation = 3.14159
-
-[node name="Counter" type="Label" parent="."]
-top_level = true
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="ScoreBoard" type="Label" parent="."]
-top_level = true
-offset_left = 1108.0
-offset_right = 1152.0
-offset_bottom = 23.0
-size_flags_horizontal = 8
-size_flags_vertical = 0
-horizontal_alignment = 2
-metadata/_edit_use_anchors_ = true
 
 [connection signal="area_entered" from="LifeLossZone" to="." method="_on_life_loss_zone_area_entered"]
 [connection signal="timeout" from="GenerationTimer" to="." method="_on_generation_timer_timeout"]

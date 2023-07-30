@@ -26,6 +26,7 @@ func _on_dot_dash_timer_timeout():
 
 func _on_symbol_space_timer_timeout():
 	#match the output with active letters
-	stage.check_matches(output)
+	if stage != null:
+		stage.check_matches(output)
 	output = ""
 	$Label.text = output

@@ -7,6 +7,8 @@ var score = 0
 @onready var hide_codes = settings.hide_codes
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
 @onready var dict = preload("res://scripts/code_dict.gd")
+@onready var pause_menu = preload("res://scenes/pause_menu.tscn")
+@onready var endgame_menu = preload("res://scenes/endgame_menu.tscn")
 @onready var spawn_point = $Path2D/SpawnPoint
 @onready var counter = $Counter
 
@@ -18,6 +20,14 @@ func _ready():
 
 func _physics_process(delta):
 	spawn_point.progress_ratio += 0.1 * delta
+	if Input.is_action_just_pressed("ui_cancel"):
+		pause()
+
+
+func pause():
+	get_tree().paused = true
+	var instance = pause_menu.instantiate()
+	add_child(instance)
 
 
 func check_matches(pattern):
@@ -62,15 +72,27 @@ func generate(serial_number):
 
 func deduct_life():
 	lives -= 1
+	if lives < 0:
+		lives = 0
 	counter.text = str(lives)
 	if lives == 0:
 		lose()
 
 
+func kill_all_symbols():
+	for symbol in active_symbols:
+		symbol.queue_free()
+
+
 func lose():
 	for symbol in active_symbols:
 		symbol.destroy()
-	get_tree().reload_current_scene()
+	$GenerationTimer.stop()
+	counter.text = ""
+	$ScoreBoard.text = ""
+	var instance = endgame_menu.instantiate()
+	instance.label_text = "Final score: " + str(score)
+	add_child(instance)
 
 
 func _on_generation_timer_timeout():

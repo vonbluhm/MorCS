@@ -26,6 +26,7 @@ text = "Character set:"
 
 [node name="ItemList" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../../Button")
 item_count = 2
 selected = 0
 popup/item_0/text = "ITU"
@@ -45,6 +46,7 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../HBoxContainer/ItemList")
 text = "Back"
 
 [connection signal="toggled" from="VBoxContainer/HBoxContainer2/Button" to="." method="_on_button_toggled"]
