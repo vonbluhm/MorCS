@@ -3,6 +3,7 @@ extends Node2D
 var active_symbols = []
 var lives = 3
 var score = 0
+var shift_up_offset = 100
 @onready var settings = preload("res://settings.tres")
 @onready var hide_codes = settings.hide_codes
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
@@ -77,6 +78,13 @@ func deduct_life():
 	counter.text = str(lives)
 	if lives == 0:
 		lose()
+	else:
+		shift_up()
+
+
+func shift_up():
+	for symbol in active_symbols:
+		symbol.global_position.y -= shift_up_offset
 
 
 func kill_all_symbols():
@@ -87,6 +95,7 @@ func kill_all_symbols():
 func lose():
 	for symbol in active_symbols:
 		symbol.destroy()
+	active_symbols = []
 	$GenerationTimer.stop()
 	counter.text = ""
 	$ScoreBoard.text = ""
@@ -102,6 +111,6 @@ func _on_generation_timer_timeout():
 
 func _on_life_loss_zone_area_entered(area):
 	if area.is_in_group("symbols"):
-		deduct_life()
 		area.destroy()
 		active_symbols.erase(area)
+		deduct_life()
