@@ -8,10 +8,12 @@ var shift_up_offset = 100
 @onready var hide_codes = settings.hide_codes
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
 @onready var dict = preload("res://scripts/code_dict.gd")
-@onready var pause_menu = preload("res://scenes/pause_menu.tscn")
 @onready var endgame_menu = preload("res://scenes/endgame_menu.tscn")
 @onready var spawn_point = $Path2D/SpawnPoint
 @onready var counter = $Counter
+@onready var pause_menu = $PauseMenu
+@onready var camera = $Camera2D
+signal shake(time: float)
 
 
 func _ready():
@@ -27,8 +29,8 @@ func _physics_process(delta):
 
 func pause():
 	get_tree().paused = true
-	var instance = pause_menu.instantiate()
-	add_child(instance)
+	pause_menu.set_deferred("visible", true)
+	pause_menu.resume_button.grab_focus()
 
 
 func check_matches(pattern):
@@ -80,6 +82,7 @@ func deduct_life():
 		lose()
 	else:
 		shift_up()
+	shake.emit(0.5)
 
 
 func shift_up():
@@ -93,8 +96,7 @@ func kill_all_symbols():
 
 
 func lose():
-	for symbol in active_symbols:
-		symbol.destroy()
+	kill_all_symbols()
 	active_symbols = []
 	$GenerationTimer.stop()
 	counter.text = ""

@@ -1,12 +1,16 @@
 extends Control
 
+
+@onready var resume_button = $VBoxContainer/ResumeButton
+
+
 func _ready():
-	$VBoxContainer/ResumeButton.grab_focus()
+	set_deferred("visible", false)
 
 
 func _on_resume_button_pressed():
 	get_tree().paused = false
-	queue_free()
+	set_deferred("visible", false)
 
 
 func _on_quit_button_pressed():

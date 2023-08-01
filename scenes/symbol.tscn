@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgiiboq3koae5"]
+[gd_scene load_steps=8 format=3 uid="uid://cgiiboq3koae5"]
 
 [ext_resource type="Script" path="res://scripts/symbol.gd" id="1_b3d3h"]
 [ext_resource type="Texture2D" uid="uid://dd23kl1a45hps" path="res://symbol.svg" id="2_72f6n"]
@@ -19,6 +19,29 @@ size = Vector2(113, 113)
 
 [sub_resource type="LabelSettings" id="LabelSettings_iw7of"]
 font_size = 32
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gdfkh"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wuqu7"]
+lifetime_randomness = 0.1
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 60.0
+gravity = Vector3(0, 490, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 250.0
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+anim_offset_min = 0.4553
+anim_offset_max = 1.0
 
 [node name="Symbol" type="Area2D"]
 script = ExtResource("1_b3d3h")
@@ -62,3 +85,19 @@ label_settings = SubResource("LabelSettings_iw7of")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_gdfkh")
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_wuqu7")
+texture = ExtResource("2_72f6n")
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
