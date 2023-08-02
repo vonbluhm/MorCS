@@ -5,9 +5,10 @@ var lives = 3
 var score = 0
 var shift_up_offset = 100
 @onready var settings = preload("res://settings.tres")
+@onready var used_dict
 @onready var hide_codes = settings.hide_codes
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
-@onready var dict = preload("res://scripts/code_dict.gd")
+@onready var dicts = preload("res://scripts/code_dict.gd")
 @onready var endgame_menu = preload("res://scenes/endgame_menu.tscn")
 @onready var spawn_point = $Path2D/SpawnPoint
 @onready var counter = $Counter
@@ -19,6 +20,11 @@ signal shake(time: float)
 func _ready():
 	counter.text = str(lives)
 	$ScoreBoard.text = str(score)
+	match settings.dict_option:
+		0:
+			used_dict = dicts.DICT_ITU
+		1:
+			used_dict = dicts.DICT_CYR
 
 
 func _physics_process(delta):
@@ -64,8 +70,8 @@ func return_global_y(node: Node2D):
 func generate(serial_number):
 	#Spawns a symbol with a corresponding code
 	var instance = symbol_scene.instantiate()
-	instance.character = dict.CHARACTERS[serial_number]
-	instance.code = dict.CODES[serial_number]
+	instance.character = used_dict[serial_number][0]
+	instance.code = used_dict[serial_number][1]
 	if not hide_codes:
 		instance.code_text = instance.code
 	instance.global_position = spawn_point.global_position
@@ -107,7 +113,7 @@ func lose():
 
 
 func _on_generation_timer_timeout():
-	generate(randi() % len(dict.CODES))
+	generate(randi() % used_dict.size())
 	$GenerationTimer.wait_time = 2 + randi_range(-3, 3) * 0.25
 
 

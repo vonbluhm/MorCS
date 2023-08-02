@@ -49,5 +49,6 @@ layout_mode = 2
 focus_neighbor_bottom = NodePath("../HBoxContainer/ItemList")
 text = "Back"
 
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/HBoxContainer2/Button" to="." method="_on_button_toggled"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
