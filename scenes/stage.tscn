@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx2hbmci8fhyd"]
+[gd_scene load_steps=8 format=3 uid="uid://bx2hbmci8fhyd"]
 
 [ext_resource type="Script" path="res://scripts/stage.gd" id="1_pc3sb"]
 [ext_resource type="PackedScene" uid="uid://be0iv16y63jix" path="res://scenes/input_handler.tscn" id="1_yrtvv"]
 [ext_resource type="PackedScene" uid="uid://c4jpvdumslthy" path="res://scenes/pause_menu.tscn" id="3_jq3l6"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="4_iuqnm"]
+[ext_resource type="PackedScene" uid="uid://cecnbj2dj4w8q" path="res://scenes/endgame_menu.tscn" id="5_n7dq7"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0u2nv"]
 
@@ -54,6 +55,9 @@ position = Vector2(1118, 0)
 rotation = 3.14159
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_jq3l6")]
+
+[node name="EndGameMenu" parent="." instance=ExtResource("5_n7dq7")]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

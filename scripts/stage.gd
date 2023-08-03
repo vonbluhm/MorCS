@@ -4,12 +4,14 @@ var active_symbols = []
 var lives = 3
 var score = 0
 var shift_up_offset = 100
+var config = ConfigFile.new()
 @onready var settings = preload("res://settings.tres")
 @onready var used_dict
 @onready var hide_codes = settings.hide_codes
+@onready var high_score = settings.high_score
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
 @onready var dicts = preload("res://scripts/code_dict.gd")
-@onready var endgame_menu = preload("res://scenes/endgame_menu.tscn")
+@onready var endgame_menu = $EndGameMenu
 @onready var spawn_point = $Path2D/SpawnPoint
 @onready var counter = $Counter
 @onready var pause_menu = $PauseMenu
@@ -25,6 +27,7 @@ func _ready():
 			used_dict = dicts.DICT_ITU
 		1:
 			used_dict = dicts.DICT_CYR
+	config.load("user://settings.ini")
 
 
 func _physics_process(delta):
@@ -99,17 +102,25 @@ func shift_up():
 func kill_all_symbols():
 	for symbol in active_symbols:
 		symbol.queue_free()
+	active_symbols = []
 
 
 func lose():
 	kill_all_symbols()
-	active_symbols = []
 	$GenerationTimer.stop()
 	counter.text = ""
 	$ScoreBoard.text = ""
-	var instance = endgame_menu.instantiate()
-	instance.label_text = "Final score: " + str(score)
-	add_child(instance)
+	endgame_menu.visible = true
+	endgame_menu.try_again_button.grab_focus()
+	if score > high_score:
+		endgame_menu.label.text = "New high score: " + str(score)
+		#config.set_value("Player1", "character_set", config.get_value("Player1", "character_set"))
+		#config.set_value("Player1", "hide_codes", config.get_value("Player1", "hide_codes"))
+		config.set_value("Player1", "high_score", score)
+		config.save("user://settings.ini")
+		#high_score = score
+	else:
+		endgame_menu.label.text = "Final score: " + str(score)
 
 
 func _on_generation_timer_timeout():

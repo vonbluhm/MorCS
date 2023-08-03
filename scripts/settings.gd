@@ -1,5 +1,6 @@
 extends Resource
 
 
-@export var hide_codes: bool = false
-@export var dict_option = 0
+var hide_codes: bool = false
+var dict_option: int = 0
+var high_score: int = 0

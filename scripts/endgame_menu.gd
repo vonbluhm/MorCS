@@ -1,11 +1,10 @@
 extends Control
 
-var label_text = "BetterLuckNextTime"
-
+@onready var label = $VBoxContainer/Label
+@onready var try_again_button = $VBoxContainer/HBoxContainer/TryAgainButton
 
 func _ready():
-	$VBoxContainer/HBoxContainer/TryAgainButton.grab_focus()
-	$VBoxContainer/Label.text = label_text
+	try_again_button.grab_focus()
 
 
 func _on_try_again_button_pressed():
