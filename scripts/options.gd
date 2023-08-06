@@ -3,6 +3,7 @@ extends Control
 @onready var settings = preload("res://settings.tres")
 var config = ConfigFile.new()
 
+
 func _ready():
 	config.load("user://settings.ini")
 	$VBoxContainer/HBoxContainer/ItemList.grab_focus()
@@ -28,5 +29,3 @@ func save_config():
 	config.set_value("Player1", "character_set", settings.dict_option)
 	config.set_value("Player1", "hide_codes", settings.hide_codes)
 	config.save("user://settings.ini")
-
-

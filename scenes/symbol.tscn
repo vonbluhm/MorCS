@@ -29,7 +29,7 @@ particles_anim_loop = false
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wuqu7"]
 lifetime_randomness = 0.1
 emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
+emission_box_extents = Vector3(50, 50, 0)
 particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
 spread = 60.0
@@ -53,17 +53,10 @@ sprite_frames = SubResource("SpriteFrames_pyjyf")
 shape = SubResource("RectangleShape2D_ube77")
 
 [node name="Label" type="Label" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -56.5
 offset_top = -56.5
 offset_right = 56.5
 offset_bottom = 56.5
-grow_horizontal = 2
-grow_vertical = 2
 label_settings = SubResource("LabelSettings_iw7of")
 horizontal_alignment = 1
 vertical_alignment = 1

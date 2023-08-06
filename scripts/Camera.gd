@@ -12,10 +12,10 @@ func _on_camera_shake(time):
 
 
 func _process(_delta):
-	offset.x = randi_range(-1, 1) * 5
-	offset.y = randi_range(-1, 1) * 5
+	position.x = randi_range(-1, 1) * 5
+	position.y = randi_range(-1, 1) * 5
 
 
 func _on_shake_timer_timeout():
-	offset = Vector2.ZERO
+	position = Vector2.ZERO
 	set_process(false)

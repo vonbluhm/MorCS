@@ -13,7 +13,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="SymbolSpaceTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.2
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
@@ -35,3 +35,4 @@ vertical_alignment = 1
 
 [connection signal="timeout" from="DotDashTimer" to="." method="_on_dot_dash_timer_timeout"]
 [connection signal="timeout" from="SymbolSpaceTimer" to="." method="_on_symbol_space_timer_timeout"]
+[connection signal="resized" from="Label" to="." method="_on_label_resized"]

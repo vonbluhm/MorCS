@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b57nxqxvtgpg1"]
+
+[ext_resource type="Script" path="res://scripts/Generator.gd" id="1_ciokl"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_ptl0t"]
+mix_rate = 22050.0
+buffer_length = 0.1
+
+[node name="Generator" type="Node"]
+script = ExtResource("1_ciokl")
+pulse_hz = 800.0
+
+[node name="Player" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamGenerator_ptl0t")
+volume_db = -10.0
