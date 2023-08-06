@@ -38,12 +38,14 @@ func _ready():
 
 func _physics_process(delta):
 	spawn_point.progress_ratio += 0.1 * delta
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
 		pause()
 
 
 func pause():
 	get_tree().paused = true
+	var img = get_viewport().get_texture().get_image()
+	pause_menu.sprite.texture = ImageTexture.create_from_image(img)
 	pause_menu.set_deferred("visible", true)
 	pause_menu.resume_button.grab_focus()
 
@@ -87,7 +89,7 @@ func generate(serial_number: int):
 		instance.code_text = instance.code
 	instance.global_position = spawn_point.global_position
 	active_symbols.append(instance)
-	get_tree().get_root().add_child(instance)
+	add_child(instance)
 
 
 func toggle_collision_for_active_symbols(mask: String):
@@ -118,13 +120,16 @@ func shift_up():
 
 
 func kill_all_symbols():
-	for symbol in active_symbols:
-		symbol.queue_free()
+	for child in get_tree().get_root().get_children():
+		if child.is_in_group("symbols"):
+			child.queue_free()
 	active_symbols = []
 
 
 func lose():
-	kill_all_symbols()
+	for symbol in active_symbols:
+		symbol.queue_free()
+	active_symbols = []
 	$InputHandler.queue_free()
 	$GenerationTimer.stop()
 	$GO.play()

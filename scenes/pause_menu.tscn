@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4jpvdumslthy"]
+[gd_scene load_steps=4 format=3 uid="uid://c4jpvdumslthy"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_o8ft1"]
+[ext_resource type="Shader" path="res://scenes/pause_menu.gdshader" id="2_eankk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_icsir"]
+shader = ExtResource("2_eankk")
+shader_parameter/blur = 5.0
 
 [node name="PauseMenu" type="Control"]
 process_mode = 2
@@ -15,27 +20,49 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_o8ft1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-process_mode = 2
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_icsir")
+
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = -1
-offset_left = 541.0
-offset_top = 291.0
-offset_right = 611.0
-offset_bottom = 357.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -33.0
+offset_right = 35.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../QuitButton")
 text = "Resume"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Panel/VBoxContainer"]
 process_mode = 2
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../ResumeButton")
 text = "Quit"
 
-[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
