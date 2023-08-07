@@ -4,8 +4,9 @@ extends Area2D
 var character = ""
 var code: String = ""
 var code_text = ""
-var speed = 100
+@onready var speed = get_window().size.y * 0.18
 var random_component = 0
+var value = 500
 @onready var code_label = $Label2
 
 
@@ -21,7 +22,6 @@ func _process(delta):
 
 
 func destroy():
-	
 	$Label.hide()
 	code_label.hide()
 	$AnimatedSprite2D.hide()

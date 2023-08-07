@@ -1,13 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx2hbmci8fhyd"]
+[gd_scene load_steps=15 format=3 uid="uid://bx2hbmci8fhyd"]
 
 [ext_resource type="Script" path="res://scripts/stage.gd" id="1_pc3sb"]
 [ext_resource type="PackedScene" uid="uid://be0iv16y63jix" path="res://scenes/input_handler.tscn" id="1_yrtvv"]
 [ext_resource type="PackedScene" uid="uid://c4jpvdumslthy" path="res://scenes/pause_menu.tscn" id="3_jq3l6"]
+[ext_resource type="Texture2D" uid="uid://cnbk2o4jbfnfl" path="res://g1441.png" id="4_0thjv"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="4_iuqnm"]
+[ext_resource type="Texture2D" uid="uid://cx210qjl738dn" path="res://g1442.png" id="5_17n7g"]
 [ext_resource type="PackedScene" uid="uid://cecnbj2dj4w8q" path="res://scenes/endgame_menu.tscn" id="5_n7dq7"]
 [ext_resource type="AudioStream" uid="uid://b4keieqh37xcx" path="res://GO.mp3" id="6_2aeht"]
 [ext_resource type="AudioStream" uid="uid://bxr1nij51rnj0" path="res://LifeLoss.mp3" id="6_px1om"]
 [ext_resource type="AudioStream" uid="uid://eobvb0nleejd" path="res://Destroyed.mp3" id="7_hblcw"]
+[ext_resource type="AudioStream" uid="uid://biggf7dxctp5q" path="res://GO_HS.mp3" id="8_n75ri"]
+[ext_resource type="AudioStream" uid="uid://bdpot2l2vr6pe" path="res://LifeAwarded.mp3" id="10_2c7c5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0u2nv"]
 
@@ -44,20 +48,43 @@ layout_mode = 1
 
 [node name="Counter" type="Label" parent="Control"]
 top_level = true
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
 offset_right = 40.0
-offset_bottom = 23.0
+grow_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control/Counter"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+max_value = 3.0
+value = 3.0
+allow_greater = true
+texture_under = ExtResource("4_0thjv")
+texture_progress = ExtResource("5_17n7g")
 
 [node name="ScoreBoard" type="Label" parent="Control"]
 top_level = true
-layout_mode = 0
-offset_left = 1108.0
-offset_right = 1152.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 0
 horizontal_alignment = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="InputHandler" parent="." instance=ExtResource("1_yrtvv")]
 position = Vector2(580, 608)
@@ -87,16 +114,23 @@ script = ExtResource("4_iuqnm")
 [node name="ShakeTimer" type="Timer" parent="Camera2D"]
 one_shot = true
 
+[node name="GO_HS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_n75ri")
+
 [node name="GO" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_2aeht")
 
 [node name="Destroyed" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_hblcw")
 
+[node name="LifeAwarded" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_2c7c5")
+
 [node name="LifeLost" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_px1om")
 
 [connection signal="shake" from="." to="Camera2D" method="_on_camera_shake"]
+[connection signal="value_changed" from="Control/Counter/TextureProgressBar" to="." method="_on_texture_progress_bar_value_changed"]
 [connection signal="area_entered" from="LifeLossZone" to="." method="_on_life_loss_zone_area_entered"]
 [connection signal="timeout" from="GenerationTimer" to="." method="_on_generation_timer_timeout"]
 [connection signal="timeout" from="Camera2D/ShakeTimer" to="Camera2D" method="_on_shake_timer_timeout"]

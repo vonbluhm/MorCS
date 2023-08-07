@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_icsir"]
 shader = ExtResource("2_eankk")
-shader_parameter/blur = 5.0
+shader_parameter/blur = 0.573
 
 [node name="PauseMenu" type="Control"]
 process_mode = 2
