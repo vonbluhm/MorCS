@@ -32,6 +32,7 @@ func _ready():
 	
 	var window_size = get_window().size
 	$Control/ColorRect.global_position = Vector2i(-50, -50)
+	#This overlap prevents revealing the background
 	$Control/ColorRect.set_size(window_size + Vector2i(100, 100))
 	$LifeLossZone.global_position.y = window_size.y
 
@@ -55,13 +56,7 @@ func check_matches(pattern):
 	for symbol in active_symbols:
 		if symbol.code == pattern:
 			symbols_for_elimination.append(symbol)
-	if len(symbols_for_elimination) == 1:
-		score += ceili(return_global_y($LifeLossZone) - return_global_y(symbols_for_elimination[0]))
-		symbols_for_elimination[0].destroy()
-		scoreboard.text = str(score)
-		active_symbols.erase(symbols_for_elimination[0])
-		$Destroyed.play()
-	elif len(symbols_for_elimination) > 1:
+	if len(symbols_for_elimination) >= 1:
 		var global_ys = symbols_for_elimination.map(return_global_y)
 		var max_y = -1
 		var idx_of_max_y = null
@@ -120,7 +115,7 @@ func shift_up():
 
 
 func kill_all_symbols():
-	for child in get_tree().get_root().get_children():
+	for child in get_children():
 		if child.is_in_group("symbols"):
 			child.queue_free()
 	active_symbols = []
