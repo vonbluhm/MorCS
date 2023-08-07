@@ -126,7 +126,6 @@ func deduct_life():
 	shake.emit(0.5)
 
 
-
 func shift_up():
 	for symbol in active_symbols:
 		symbol.global_position.y -= shift_up_offset
@@ -172,4 +171,4 @@ func _on_life_loss_zone_area_entered(area):
 
 
 func _on_texture_progress_bar_value_changed(value):
-	set_deferred("visible", value <= 3)
+	lifebar.set_deferred("visible", value <= 3)
