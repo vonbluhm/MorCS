@@ -3,7 +3,7 @@ extends Node2D
 var active_symbols = []
 var lives = 3
 var score = 0
-var points_left_before_award = 10000
+var points_left_before_award = 5000
 var shift_up_offset = 100
 var config = ConfigFile.new()
 @onready var settings = preload("res://settings.tres")
@@ -11,11 +11,14 @@ var config = ConfigFile.new()
 @onready var hide_codes = settings.hide_codes
 @onready var high_score = settings.high_score
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
+@onready var points_popup = preload("res://scenes/points_popup.tscn")
 @onready var dicts = preload("res://scripts/code_dict.gd")
 @onready var spawn_point = $Path2D/SpawnPoint
-@onready var counter = $Control/Counter
-@onready var lifebar = $Control/Counter/TextureProgressBar
+@onready var heartx = $Control/HeartX
+@onready var counter = $Control/HeartX/Counter
+@onready var lifebar = $Control/TextureProgressBar
 @onready var scoreboard = $Control/ScoreBoard
+@onready var scoreboard_label = $Control/ScoreBoard/Label
 @onready var pause_menu = $Control/PauseMenu
 @onready var endgame_menu = $Control/EndGameMenu
 @onready var camera = $Camera2D
@@ -23,8 +26,7 @@ signal shake(time: float)
 
 
 func _ready():
-	counter.text = str(lives)
-	scoreboard.text = str(score)
+	scoreboard_label.text = str(score)
 	match settings.dict_option:
 		0:
 			used_dict = dicts.DICT_ITU
@@ -69,11 +71,15 @@ func check_matches(pattern):
 		var points_to_add = ceili((1 - global_ys[idx_of_max_y]/return_global_y($LifeLossZone))*500)
 		points_to_add = ceili(points_to_add  * (1 + symbols_for_elimination[idx_of_max_y].random_component * 0.1))
 		if points_to_add >= 0:
+			var instance = points_popup.instantiate()
+			instance.text = str(points_to_add)
+			symbols_for_elimination[idx_of_max_y].add_child(instance)
 			score += points_to_add
 			points_left_before_award -= points_to_add
 			if points_left_before_award <= 0:
 				award_life() 
-		scoreboard.text = str(score)
+			scoreboard_label.text = str(score)
+			scoreboard.value = score
 		symbols_for_elimination[idx_of_max_y].destroy()
 		active_symbols.erase(symbols_for_elimination[idx_of_max_y])
 		$Destroyed.play()
@@ -107,17 +113,20 @@ func award_life():
 	if lives < 9:
 		$LifeAwarded.play()
 		lives += 1
+		counter.text = str(lives) if lives > 3 else ""
 		lifebar.value = lives
-		counter.text = str(lives)
-	points_left_before_award += 30000
+		
+	points_left_before_award += 15000
+	scoreboard.min_value = scoreboard.max_value
+	scoreboard.max_value += 15000
 
 
 func deduct_life():
 	lives -= 1
+	counter.text = str(lives) if lives > 3 else ""
 	lifebar.value = lives
 	if lives < 0:
 		lives = 0
-	counter.text = str(lives)
 	if lives == 0:
 		lose()
 	else:
@@ -145,6 +154,7 @@ func lose():
 	$InputHandler.queue_free()
 	$GenerationTimer.stop()
 	counter.queue_free()
+	lifebar.queue_free()
 	scoreboard.queue_free()
 	endgame_menu.visible = true
 	endgame_menu.try_again_button.grab_focus()
@@ -172,3 +182,4 @@ func _on_life_loss_zone_area_entered(area):
 
 func _on_texture_progress_bar_value_changed(value):
 	lifebar.set_deferred("visible", value <= 3)
+	heartx.set_deferred("visible", value > 3)

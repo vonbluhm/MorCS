@@ -4,6 +4,7 @@ var output = ""
 const DOT = "."
 const DASH = "-"
 @onready var stage = get_parent()
+@onready var label = $Label
 @onready var generator_scene = preload("res://scenes/generator.tscn")
 
 
@@ -18,7 +19,7 @@ func _process(_delta):
 		if not $DotDashTimer.is_stopped():
 			$DotDashTimer.stop()
 			output += DOT
-			$Label.text = output
+			label.text = output
 		$SymbolSpaceTimer.start()
 		for child in get_children():
 			if child.is_in_group("generator"):
@@ -27,14 +28,14 @@ func _process(_delta):
 
 func _on_dot_dash_timer_timeout():
 	output += DASH
-	$Label.text = output
+	label.text = output
 
 
 func _on_symbol_space_timer_timeout():
 	if stage != null and stage.has_method("check_matches"):
 		stage.check_matches(output)
 	output = ""
-	$Label.text = output
+	label.text = output
 
 
 func _on_label_resized():

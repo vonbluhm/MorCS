@@ -19,7 +19,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
 		var img = get_viewport().get_texture().get_image()
 		sprite.texture = ImageTexture.create_from_image(img)
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
 		blur = 0
 	elif blur < 4:
 		blur += delta * 5
@@ -29,6 +29,7 @@ func _process(delta):
 
 
 func _on_resume_button_pressed():
+	blur = 0
 	get_tree().paused = false
 	set_deferred("visible", false)
 
