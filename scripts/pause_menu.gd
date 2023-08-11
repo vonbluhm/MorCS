@@ -25,7 +25,7 @@ func _process(delta):
 		blur += delta * 5
 		if blur > 4:
 			blur = 4
-	$Sprite2D.material.set_shader_parameter("blur", blur)
+	sprite.material.set_shader_parameter("blur", blur)
 
 
 func _on_resume_button_pressed():

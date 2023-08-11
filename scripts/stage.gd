@@ -14,6 +14,7 @@ var config = ConfigFile.new()
 @onready var points_popup = preload("res://scenes/points_popup.tscn")
 @onready var dicts = preload("res://scripts/code_dict.gd")
 @onready var spawn_point = $Path2D/SpawnPoint
+@onready var background = $Control/ColorRect
 @onready var heartx = $Control/HeartX
 @onready var counter = $Control/HeartX/Counter
 @onready var lifebar = $Control/TextureProgressBar
@@ -22,6 +23,14 @@ var config = ConfigFile.new()
 @onready var pause_menu = $Control/PauseMenu
 @onready var endgame_menu = $Control/EndGameMenu
 @onready var camera = $Camera2D
+@onready var hitzone = $LifeLossZone
+@onready var sfx_destroyed = $Destroyed
+@onready var sfx_hit = $LifeLost
+@onready var sfx_extralife = $LifeAwarded
+@onready var sfx_lost = $GO
+@onready var sfx_lost_with_hs = $GO_HS
+@onready var input_handler = $InputHandler
+@onready var spawning_timer = $GenerationTimer
 signal shake(time: float)
 
 
@@ -35,10 +44,10 @@ func _ready():
 	config.load("user://settings.ini")
 	
 	var window_size = get_window().size
-	$Control/ColorRect.global_position = Vector2i(-50, -50)
+	background.global_position = Vector2i(-50, -50)
 	#This overlap prevents revealing the background
-	$Control/ColorRect.set_size(window_size + Vector2i(100, 100))
-	$LifeLossZone.global_position.y = window_size.y
+	background.set_size(window_size + Vector2i(100, 100))
+	hitzone.global_position.y = window_size.y
 
 
 func _physics_process(delta):
@@ -82,7 +91,7 @@ func check_matches(pattern):
 			scoreboard.value = score
 		symbols_for_elimination[idx_of_max_y].destroy()
 		active_symbols.erase(symbols_for_elimination[idx_of_max_y])
-		$Destroyed.play()
+		sfx_destroyed.play()
 
 
 func return_global_y(node: Node2D):
@@ -111,7 +120,7 @@ func toggle_collision_for_active_symbols(mask: String):
 
 func award_life():
 	if lives < 9:
-		$LifeAwarded.play()
+		sfx_extralife.play()
 		lives += 1
 		counter.text = str(lives) if lives > 3 else ""
 		lifebar.value = lives
@@ -130,7 +139,7 @@ func deduct_life():
 	if lives == 0:
 		lose()
 	else:
-		$LifeLost.play()
+		sfx_hit.play()
 		shift_up()
 	shake.emit(0.5)
 
@@ -151,8 +160,8 @@ func lose():
 	for symbol in active_symbols:
 		symbol.queue_free()
 	active_symbols = []
-	$InputHandler.queue_free()
-	$GenerationTimer.stop()
+	input_handler.queue_free()
+	spawning_timer.stop()
 	counter.queue_free()
 	lifebar.queue_free()
 	scoreboard.queue_free()
@@ -162,15 +171,15 @@ func lose():
 		endgame_menu.label.text = "New high score: " + str(score)
 		config.set_value("Player1", "high_score", score)
 		config.save("user://settings.ini")
-		$GO_HS.play()
+		sfx_lost_with_hs.play()
 	else:
 		endgame_menu.label.text = "Final score: " + str(score)
-		$GO.play()
+		sfx_lost.play()
 
 
 func _on_generation_timer_timeout():
 	generate(randi() % used_dict.size())
-	$GenerationTimer.wait_time = 2 + randi_range(-3, 3) * 0.25
+	spawning_timer.wait_time = 2 + randi_range(-3, 3) * 0.25
 
 
 func _on_life_loss_zone_area_entered(area):

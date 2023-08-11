@@ -1,5 +1,6 @@
 extends Camera2D
 
+@onready var shake_timer = $ShakeTimer
 
 func _ready():
 	set_process(false)
@@ -7,8 +8,8 @@ func _ready():
 
 func _on_camera_shake(time):
 	set_process(true)
-	$ShakeTimer.wait_time = time
-	$ShakeTimer.start()
+	shake_timer.wait_time = time
+	shake_timer.start()
 
 
 func _process(_delta):

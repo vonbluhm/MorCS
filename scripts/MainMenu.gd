@@ -1,9 +1,10 @@
 extends Control
 @onready var settings = preload("res://settings.tres")
+@onready var start_button = $VBoxContainer/StartButton
 
 
 func _ready():
-	$VBoxContainer/StartButton.grab_focus()
+	start_button.grab_focus()
 	var config = ConfigFile.new()
 	var err = config.load("user://settings.ini")
 	if err != OK:

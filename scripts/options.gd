@@ -1,14 +1,16 @@
 extends Control
 
 @onready var settings = preload("res://settings.tres")
+@onready var item_list = $VBoxContainer/HBoxContainer/ItemList
+@onready var hide_codes_button = $VBoxContainer/HBoxContainer2/Button
 var config = ConfigFile.new()
 
 
 func _ready():
 	config.load("user://settings.ini")
-	$VBoxContainer/HBoxContainer/ItemList.grab_focus()
-	$VBoxContainer/HBoxContainer/ItemList.select(settings.dict_option)
-	$VBoxContainer/HBoxContainer2/Button.set_pressed_no_signal(settings.hide_codes)
+	item_list.grab_focus()
+	item_list.select(settings.dict_option)
+	hide_codes_button.set_pressed_no_signal(settings.hide_codes)
 
 
 func _on_button_pressed():
