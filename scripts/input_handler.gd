@@ -9,6 +9,7 @@ const DASH = "-"
 @onready var dot_dash = $DotDashTimer
 @onready var end_of_symbol = $SymbolSpaceTimer
 @onready var generator_scene = preload("res://scenes/generator.tscn")
+@onready var settings = preload("res://settings.tres")
 var generator = null
 signal output_changed
 
@@ -22,6 +23,7 @@ func _process(_delta):
 		dot_dash.start()
 		end_of_symbol.stop()
 		var instance = generator_scene.instantiate()
+		instance.pulse_hz = settings.beep_frequency
 		generator = instance
 		add_child(instance)
 	if Input.is_action_just_released("button_pressed"):

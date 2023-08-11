@@ -44,6 +44,20 @@ text = "Hide codes:"
 [node name="Button" type="CheckButton" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Beep frequency:"
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+min_value = 100.0
+max_value = 4000.0
+step = 10.0
+value = 800.0
+
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../HBoxContainer/ItemList")
@@ -51,4 +65,5 @@ text = "Back"
 
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/HBoxContainer2/Button" to="." method="_on_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer3/SpinBox" to="." method="_on_spin_box_value_changed"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
