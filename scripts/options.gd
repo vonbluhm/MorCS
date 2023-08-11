@@ -37,4 +37,5 @@ func _on_spin_box_value_changed(value):
 func save_config():
 	config.set_value("Player1", "character_set", settings.dict_option)
 	config.set_value("Player1", "hide_codes", settings.hide_codes)
+	config.set_value("Player1", "beep_frequency", settings.beep_frequency)
 	config.save("user://settings.ini")
