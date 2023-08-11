@@ -57,6 +57,7 @@ min_value = 100.0
 max_value = 4000.0
 step = 10.0
 value = 800.0
+suffix = "Hz"
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
