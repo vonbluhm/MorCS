@@ -1,5 +1,4 @@
 extends Control
-@onready var settings = preload("res://settings.tres")
 @onready var start_button = $VBoxContainer/StartButton
 
 
@@ -18,10 +17,10 @@ func _ready():
 	if config.get_value("Player1", "beep_frequency") == null:
 		config.set_value("Player1", "beep_frequency", 800)
 	config.save("user://settings.ini")
-	settings.dict_option = config.get_value("Player1", "character_set")
-	settings.hide_codes = config.get_value("Player1", "hide_codes")
-	settings.high_score = config.get_value("Player1", "high_score")
-	settings.beep_frequency = config.get_value("Player1", "beep_frequency")
+	Settings.dict_option = config.get_value("Player1", "character_set")
+	Settings.hide_codes = config.get_value("Player1", "hide_codes")
+	Settings.high_score = config.get_value("Player1", "high_score")
+	Settings.beep_frequency = config.get_value("Player1", "beep_frequency")
 
 
 func _on_start_button_pressed():

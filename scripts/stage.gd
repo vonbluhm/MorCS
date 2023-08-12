@@ -6,10 +6,9 @@ var score = 0
 var points_left_before_award = 5000
 var shift_up_offset = 100
 var config = ConfigFile.new()
-@onready var settings = preload("res://settings.tres")
 @onready var used_dict
-@onready var hide_codes = settings.hide_codes
-@onready var high_score = settings.high_score
+@onready var hide_codes = Settings.hide_codes
+@onready var high_score = Settings.high_score
 @onready var symbol_scene = preload("res://scenes/symbol.tscn")
 @onready var points_popup = preload("res://scenes/points_popup.tscn")
 @onready var dicts = preload("res://scripts/code_dict.gd")
@@ -36,7 +35,7 @@ signal shake(time: float)
 
 func _ready():
 	scoreboard_label.text = str(score)
-	match settings.dict_option:
+	match Settings.dict_option:
 		0:
 			used_dict = dicts.DICT_ITU
 		1:

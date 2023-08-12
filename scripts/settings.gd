@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 
 
 var hide_codes: bool = false
