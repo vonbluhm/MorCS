@@ -1,9 +1,9 @@
 extends Control
 
-@onready var item_list = $VBoxContainer/HBoxContainer/ItemList
-@onready var hide_codes_button = $VBoxContainer/HBoxContainer2/Button
-@onready var freq_spinbox = $VBoxContainer/HBoxContainer3/SpinBox
-var config = ConfigFile.new()
+@onready var item_list: OptionButton = $VBoxContainer/HBoxContainer/ItemList
+@onready var hide_codes_button: CheckButton = $VBoxContainer/HBoxContainer2/Button
+@onready var freq_spinbox: SpinBox = $VBoxContainer/HBoxContainer3/SpinBox
+var config: ConfigFile = ConfigFile.new()
 
 
 func _ready():

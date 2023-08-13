@@ -1,7 +1,7 @@
 extends Control
 
-@onready var label = $VBoxContainer/Label
-@onready var try_again_button = $VBoxContainer/HBoxContainer/TryAgainButton
+@onready var label: Label = $VBoxContainer/Label
+@onready var try_again_button: Button= $VBoxContainer/HBoxContainer/TryAgainButton
 
 func _ready():
 	try_again_button.grab_focus()

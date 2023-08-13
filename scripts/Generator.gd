@@ -1,8 +1,8 @@
 extends Node
 
-var sample_hz = 22050.0
-@export var pulse_hz = 440.0
-var phase = 0.0
+var sample_hz: float = 22050.0
+@export var pulse_hz: float = 440.0
+var phase: float = 0.0
 
 var playback: AudioStreamPlayback = null
 

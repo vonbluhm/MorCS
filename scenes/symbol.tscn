@@ -42,7 +42,6 @@ orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 anim_offset_min = 0.4553
 anim_offset_max = 1.0
-collision_mode = 2
 
 [node name="Symbol" type="Area2D"]
 script = ExtResource("1_b3d3h")

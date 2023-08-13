@@ -1,7 +1,7 @@
 extends Control
-@onready var start_button = $VBoxContainer/StartButton
-@onready var high_score_label = $HiScore/Label
-var config = ConfigFile.new()
+@onready var start_button: Button = $VBoxContainer/StartButton
+@onready var high_score_label: Label = $HiScore/Label
+var config: ConfigFile = ConfigFile.new()
 
 func _ready():
 	start_button.grab_focus()

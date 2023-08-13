@@ -1,4 +1,4 @@
-const DICT_ITU = {
+const DICT_ITU: Dictionary = {
 	0: ["A", ".-"],
 	1: ["B", "-..."],
 	2: ["C", "-.-."],
@@ -27,7 +27,7 @@ const DICT_ITU = {
 	25: ["Z", "--.."],
 }
 
-const DICT_CYR = {
+const DICT_CYR: Dictionary = {
 	0: ["А", ".-"],
 	1: ["Б", "-..."],
 	2: ["В", ".--"],

@@ -1,9 +1,9 @@
 extends Control
 
-var upward_speed = -50
-var text = ""
-@onready var label = $Label
-@onready var fadeout = $Fadeout 
+var upward_speed: int = -50
+var text: String = ""
+@onready var label: Label = $Label
+@onready var fadeout: Timer = $Fadeout 
 
 
 func _ready():

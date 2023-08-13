@@ -1,17 +1,17 @@
 extends Area2D
 
 
-var character = ""
+var character: String = ""
 var code: String = ""
-var code_text = ""
-@onready var speed = get_window().size.y * 0.18
-var random_component = 0
-var value = 500
-@onready var label = $Label
-@onready var code_label = $Label2
-@onready var sprite = $AnimatedSprite2D
-@onready var particles = $GPUParticles2D
-@onready var despawn_timer = $Timer
+var code_text: String = ""
+@onready var speed: int = ceili(get_window().size.y * 0.18)
+var random_component: int = 0
+var value: int = 500
+@onready var label: Control = $Label
+@onready var code_label: Control = $Label2
+@onready var sprite: Node2D = $AnimatedSprite2D
+@onready var particles: Node2D = $GPUParticles2D
+@onready var despawn_timer: Timer = $Timer
 
 
 func _ready():

@@ -1,15 +1,15 @@
 extends Node2D
 
-var output = "" 
-const DOT = "."
-const DASH = "-"
+var output: String = "" 
+const DOT: String = "."
+const DASH: String = "-"
 
-@onready var stage = get_parent()
-@onready var label = $Label
-@onready var dot_dash = $DotDashTimer
-@onready var end_of_symbol = $SymbolSpaceTimer
-@onready var generator_scene = preload("res://scenes/generator.tscn")
-var generator = null
+@onready var stage: Node2D = get_parent()
+@onready var label: Label = $Label
+@onready var dot_dash: Timer = $DotDashTimer
+@onready var end_of_symbol: Timer = $SymbolSpaceTimer
+@onready var generator_scene: PackedScene = preload("res://scenes/generator.tscn")
+var generator: Node = null
 signal output_changed
 
 

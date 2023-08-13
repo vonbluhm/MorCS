@@ -1,6 +1,6 @@
 extends Camera2D
 
-@onready var shake_timer = $ShakeTimer
+@onready var shake_timer: Timer = $ShakeTimer
 
 func _ready():
 	set_process(false)

@@ -1,35 +1,35 @@
 extends Node2D
 
-var active_symbols = []
-var lives = 3
-var score = 0
-var points_left_before_award = 5000
-var shift_up_offset = 100
-var config = ConfigFile.new()
-@onready var used_dict
-@onready var hide_codes = Settings.hide_codes
-@onready var high_score = Settings.high_score
-@onready var symbol_scene = preload("res://scenes/symbol.tscn")
-@onready var points_popup = preload("res://scenes/points_popup.tscn")
-@onready var dicts = preload("res://scripts/code_dict.gd")
-@onready var spawn_point = $Path2D/SpawnPoint
-@onready var background = $Control/ColorRect
-@onready var heartx = $Control/HeartX
-@onready var counter = $Control/HeartX/Counter
-@onready var lifebar = $Control/TextureProgressBar
-@onready var scoreboard = $Control/ScoreBoard
-@onready var scoreboard_label = $Control/ScoreBoard/Label
-@onready var pause_menu = $Control/PauseMenu
-@onready var endgame_menu = $Control/EndGameMenu
-@onready var camera = $Camera2D
-@onready var hitzone = $LifeLossZone
-@onready var sfx_destroyed = $Destroyed
-@onready var sfx_hit = $LifeLost
-@onready var sfx_extralife = $LifeAwarded
-@onready var sfx_lost = $GO
-@onready var sfx_lost_with_hs = $GO_HS
-@onready var input_handler = $InputHandler
-@onready var spawning_timer = $GenerationTimer
+var active_symbols: Array = []
+var lives: int = 3
+var score: int = 0
+var points_left_before_award: int = 5000
+var shift_up_offset: int = 100
+var config: ConfigFile = ConfigFile.new()
+@onready var used_dict: Dictionary
+@onready var hide_codes: bool = Settings.hide_codes
+@onready var high_score: int = Settings.high_score
+@onready var symbol_scene: PackedScene = preload("res://scenes/symbol.tscn")
+@onready var points_popup: PackedScene = preload("res://scenes/points_popup.tscn")
+@onready var dicts: Script = preload("res://scripts/code_dict.gd")
+@onready var spawn_point: PathFollow2D = $Path2D/SpawnPoint
+@onready var background: ColorRect = $Control/ColorRect
+@onready var heartx: TextureRect = $Control/HeartX
+@onready var counter: Label = $Control/HeartX/Counter
+@onready var lifebar: TextureProgressBar = $Control/TextureProgressBar
+@onready var scoreboard: ProgressBar = $Control/ScoreBoard
+@onready var scoreboard_label: Label = $Control/ScoreBoard/Label
+@onready var pause_menu: Control = $Control/PauseMenu
+@onready var endgame_menu: Control = $Control/EndGameMenu
+@onready var camera: Camera2D = $Camera2D
+@onready var hitzone: Area2D = $LifeLossZone
+@onready var sfx_destroyed: AudioStreamPlayer2D = $Destroyed
+@onready var sfx_hit: AudioStreamPlayer2D  = $LifeLost
+@onready var sfx_extralife: AudioStreamPlayer2D  = $LifeAwarded
+@onready var sfx_lost: AudioStreamPlayer2D  = $GO
+@onready var sfx_lost_with_hs: AudioStreamPlayer2D  = $GO_HS
+@onready var input_handler: Node2D = $InputHandler
+@onready var spawning_timer: Timer = $GenerationTimer
 signal shake(time: float)
 
 
@@ -42,7 +42,7 @@ func _ready():
 			used_dict = dicts.DICT_CYR
 	config.load("user://settings.ini")
 	
-	var window_size = get_window().size
+	var window_size: Vector2i = get_window().size
 	background.global_position = Vector2i(-50, -50)
 	#This overlap prevents revealing the background
 	background.set_size(window_size + Vector2i(100, 100))
@@ -57,26 +57,26 @@ func _physics_process(delta):
 
 func pause():
 	get_tree().paused = true
-	var img = get_viewport().get_texture().get_image()
+	var img: Image = get_viewport().get_texture().get_image()
 	pause_menu.sprite.texture = ImageTexture.create_from_image(img)
 	pause_menu.set_deferred("visible", true)
 	pause_menu.resume_button.grab_focus()
 
 
 func check_matches(pattern):
-	var symbols_for_elimination = []
+	var symbols_for_elimination: Array = []
 	for symbol in active_symbols:
 		if symbol.code == pattern:
 			symbols_for_elimination.append(symbol)
 	if len(symbols_for_elimination) >= 1:
-		var global_ys = symbols_for_elimination.map(return_global_y)
+		var global_ys: Array = symbols_for_elimination.map(return_global_y)
 		var max_y = -1
 		var idx_of_max_y = null
 		for idx in range(len(global_ys)):
 			if global_ys[idx] > max_y:
 				max_y = global_ys[idx]
 				idx_of_max_y = idx
-		var points_to_add = ceili((1 - global_ys[idx_of_max_y]/return_global_y($LifeLossZone))*500)
+		var points_to_add: int = ceili((1 - global_ys[idx_of_max_y]/return_global_y($LifeLossZone))*500)
 		points_to_add = ceili(points_to_add  * (1 + symbols_for_elimination[idx_of_max_y].random_component * 0.1))
 		if points_to_add >= 0:
 			var instance = points_popup.instantiate()

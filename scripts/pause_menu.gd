@@ -1,10 +1,10 @@
 extends Control
 
 
-@onready var resume_button = $Panel/VBoxContainer/ResumeButton
-@onready var sprite = $Sprite2D
-@onready var blur = 0
-@onready var stage = get_parent().get_parent()
+@onready var resume_button: Button = $Panel/VBoxContainer/ResumeButton
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var blur: float = 0
+@onready var stage: Node2D = get_parent().get_parent()
 
 
 func _ready():
