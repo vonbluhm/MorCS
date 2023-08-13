@@ -39,6 +39,24 @@ layout_mode = 2
 focus_neighbor_bottom = NodePath("../StartButton")
 text = "Quit"
 
+[node name="HiScore" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="HiScore"]
+layout_mode = 2
+text = "High score: "
+
+[node name="ResetButton" type="Button" parent="HiScore"]
+layout_mode = 2
+text = "Reset"
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OpitonsButton" to="." method="_on_opitons_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="HiScore/ResetButton" to="." method="_on_reset_button_pressed"]
